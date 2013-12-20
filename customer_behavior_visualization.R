@@ -21,14 +21,7 @@ algorithm_numb_item_change <-function(price){
 			prob_moreitem <- total_number_row_lowerprice_moreitem/total_number_row_lowerprice
 		}
 		
-		#vec_price <- c(vec_price,price)
-		#vec_ratio <- c(vec_ratio,prob_moreitem)
-		# print(c(price,total_number_row_lowerprice_moreitem/total_number_row_lowerprice))
-		# print("SUM: ")
-		# print(vec_average)
-		# score <- choose(total_number_row_lowerprice,total_number_row_lowerprice_moreitem)*vec_average^total_number_row_lowerprice_moreitem*(1-vec_average)^(total_number_row_lowerprice-total_number_row_lowerprice_moreitem)
 		print(paste(price,total_number_row_lowerprice,total_number_row_lowerprice_moreitem,prob_moreitem,sep=" , "))
-	
 		return (c(price,total_number_row_lowerprice_moreitem/total_number_row_lowerprice))
 	
 	}
@@ -42,11 +35,6 @@ algorithm_numb_item_change <-function(price){
 		total_number_row_lowerprice_moreitem <- nrow(data_location_lowerprice_moreitem)
 		# print(total_number_row_lowerprice_moreitem)
 		prob_moreitem <- total_number_row_lowerprice_moreitem/total_number_row_lowerprice
-		#vec_price <- c(vec_price,price)
-		#vec_ratio <- c(vec_ratio,prob_moreitem)
-		# print(c(price,total_number_row_lowerprice_moreitem/total_number_row_lowerprice))
-		# print(paste(price,total_number_row_lowerprice,total_number_row_lowerprice_moreitem,prob_moreitem,sep=" , "))
-	
 		return (c(price,total_number_row_lowerprice_moreitem/total_number_row_lowerprice))
 	
 	}
@@ -71,28 +59,15 @@ algorithm_numb_item_change <-function(price){
 	#################################################################################################
 	#################################################################################################
 	cluster1$min_price_item[cluster1$min_price_item > price_cut_addon | cluster1$numb_item_no_restrict == 1] <- 0	
-	#cluster1$min_price_item[cluster1$min_price_item > price_cut_addon | cluster1$min_price_item < price_cut_addon-1 | cluster1$numb_item_no_restrict == 1] <- 0	
-	
-	#################################################################################################
-	#################################################################################################
+
 	large_pizza_orders<-read.csv(file="/Users/alan/Desktop/data_reference/large_pizza_orders.csv",head=TRUE,sep=",")		
 	cluster1<-merge(cluster1, large_pizza_orders, by="orderid" , all.x=TRUE)			
 	cluster1$large_pizza[is.na(cluster1$large_pizza)] <- 0	
-	
-	#################################################################################################
-	#################################################################################################
-	#################################################################################################
 	order_remove_01<-read.csv(file="/Users/alan/Desktop/data_reference/order_remove_01.csv",head=TRUE,sep=",")		
 	cluster1<-merge(cluster1, order_remove_01, by="orderid" , all.x=TRUE)			
 	cluster1$remove_index[is.na(cluster1$remove_index)] <- 0	
-	#################################################################################################
-	#################################################################################################
-	#################################################################################################
-	
 	# c2, weekday1234_lunch
 	credit_1_cash_0_set = 1
-	# 5 point (totally 200 points) , 0.1 for one point
-	# 0.1 * 200 = 20 point, 2 is the window = (+-1)
 	window_width = 0.1
 			
 			data_location<-cluster1
@@ -112,17 +87,9 @@ algorithm_numb_item_change <-function(price){
 			#################################################################################################
 			
 			#################################################################################################
-			#################################################################################################
-			#################################################################################################
 			data_location<-subset(data_location,locationid != 398)
 			data_location<-subset(data_location,locationid != 381)
 			#################################################################################################
-			#################################################################################################
-			#################################################################################################
-			
-				
-				
-
 			data_length_weekday1234_lunch <- length(data_location$orderid)
 
 			if(data_length_weekday1234_lunch > 100){	
@@ -153,13 +120,6 @@ algorithm_numb_item_change <-function(price){
 				data <- data.frame(vec_price,vec_ratio)
 				# plot(lowess(data$vec_price,data$vec_ratio,f=window_width), type="l",ylim=c(0,1),col="red",pch=2)
 				plot(data, type="l",ylim=c(0,1),col="red",pch=2)
-				
-				###############################################################
-				###############################################################
-				### rq_1<-regression_quad(vec_ratio,vec_price)
-				###############################################################
-				###############################################################
-				
 				abline(v=seq(0,18,1), col="grey", lty=1)
 
 			}else{
@@ -187,22 +147,10 @@ algorithm_numb_item_change <-function(price){
 				#################################################################################################
 				#################################################################################################
 				data_location<-subset(data_location,remove_index == 0)	
-				
-				#################################################################################################
-				#################################################################################################
 				#################################################################################################
 				data_location<-subset(data_location,locationid != 398)
 				data_location<-subset(data_location,locationid != 381)
 				#################################################################################################
-				#################################################################################################
-				#################################################################################################
-						
-						
-						
-						
-				
-				
-				
 				data_length_weekday1234_dinner <- length(data_location$orderid)
 
 				if(data_length_weekday1234_dinner > 100){	
@@ -233,13 +181,6 @@ algorithm_numb_item_change <-function(price){
 
 					# lines(lowess(data$vec_price,data$vec_ratio,f=window_width), type="l",ylim=c(0,1),col="blue",pch=2)
 					lines(data, type="l",ylim=c(0,1),col="blue",pch=2)
-					
-					###############################################################
-					###############################################################
-					### rq_1<-regression_quad(vec_ratio,vec_price)
-					###############################################################
-					###############################################################
-				
 					abline(v=seq(0,18,1), col="grey", lty=1)
 
 				}else{
@@ -270,15 +211,10 @@ algorithm_numb_item_change <-function(price){
 					data_length_weekday567_lunch <- length(data_location$orderid)
 					
 					#################################################################################################
-					#################################################################################################
-					#################################################################################################
 					data_location<-subset(data_location,locationid != 398)
 					data_location<-subset(data_location,locationid != 381)
 					#################################################################################################
-					#################################################################################################
-					#################################################################################################
-					
-	
+
 					if(data_length_weekday567_lunch > 100){	
 						vec_price <- c()	
 						vec_ratio <- c()	
@@ -307,13 +243,6 @@ algorithm_numb_item_change <-function(price){
 
 						# lines(lowess(data$vec_price,data$vec_ratio,f=window_width), type="l",ylim=c(0,1),col="green",pch=2)
 						lines(data, type="l",ylim=c(0,1),col="green",pch=2)
-						
-						###############################################################
-						###############################################################
-						### rq_1<-regression_quad(vec_ratio,vec_price)
-						###############################################################
-						###############################################################
-				
 						abline(v=seq(0,18,1), col="grey", lty=1)
 
 					}else{
@@ -346,14 +275,9 @@ algorithm_numb_item_change <-function(price){
 					data_length_weekend567_dinner <- length(data_location$orderid)
 				
 					#################################################################################################
-					#################################################################################################
-					#################################################################################################
 					data_location<-subset(data_location,locationid != 398)
 					data_location<-subset(data_location,locationid != 381)
 					#################################################################################################
-					#################################################################################################
-					#################################################################################################
-				
 					if(data_length_weekend567_dinner > 100){	
 						vec_price <- c()	
 						vec_ratio <- c()	
@@ -382,13 +306,6 @@ algorithm_numb_item_change <-function(price){
 
 						# lines(lowess(data$vec_price,data$vec_ratio,f=window_width), type="l",ylim=c(0,1),col="brown",pch=2)
 						lines(data, type="l",ylim=c(0,1),col="brown",pch=2)
-						
-						###############################################################
-						###############################################################
-						### rq_1<-regression_quad(vec_ratio,vec_price)
-						###############################################################
-						###############################################################
-				
 						abline(v=seq(0,18,1), col="grey", lty=1)
 
 					}else{
@@ -419,14 +336,9 @@ algorithm_numb_item_change <-function(price){
 							data_length_weekend567_dinner <- length(data_location$orderid)
 						
 							#################################################################################################
-							#################################################################################################
-							#################################################################################################
 							data_location<-subset(data_location,locationid != 398)
 							data_location<-subset(data_location,locationid != 381)
 							#################################################################################################
-							#################################################################################################
-							#################################################################################################
-						
 							if(data_length_weekend567_dinner > 100){	
 								vec_price <- c()	
 								vec_ratio <- c()	
@@ -456,12 +368,6 @@ algorithm_numb_item_change <-function(price){
 								# lines(lowess(data$vec_price,data$vec_ratio,f=window_width), type="l",ylim=c(0,1),col="brown",pch=2)
 								lines(data, type="b",ylim=c(0,1),col="black",pch=2)
 								
-								###############################################################
-								###############################################################
-								### rq_1<-regression_quad(vec_ratio,vec_price)
-								###############################################################
-								###############################################################
-				
 								abline(v=seq(0,18,1), col="grey", lty=1)
 
 							}else{
@@ -476,15 +382,4 @@ algorithm_numb_item_change <-function(price){
 			dev.off()
 	
 
-	
-	###################################################################################################
-	###################################################################################################
-	###################################################################################################
-	###################################################################################################
-	###################################################################################################
-	###################################################################################################
-	###################################################################################################
-	###################################################################################################
-	###################################################################################################
-	###################################################################################################
 	
